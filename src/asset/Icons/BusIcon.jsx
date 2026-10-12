@@ -1,4 +1,9 @@
-const BusIcon = ({width=24,height="24",fill="none",stroke="#1DD100"}) => {
+const BusIcon = ({
+  width = 24,
+  height = "24",
+  fill = "none",
+  stroke = "#1DD100",
+}) => {
   return (
     <svg
       width={width}

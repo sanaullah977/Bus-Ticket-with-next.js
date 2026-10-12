@@ -1,4 +1,4 @@
-const DriverChair = ({stroke="#030712"}) => {
+const DriverChair = ({ stroke = "#030712" }) => {
   return (
     <svg
       width="28"

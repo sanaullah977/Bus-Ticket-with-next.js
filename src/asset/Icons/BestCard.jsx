@@ -1,4 +1,8 @@
-const BestCard = ({fill="#FFBF0F",LineStroke="white",width="573"}) => {
+const BestCard = ({
+  fill = "#FFBF0F",
+  LineStroke = "white",
+  width = "573",
+}) => {
   return (
     <svg
       width={width}
