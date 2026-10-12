@@ -1,5 +1,6 @@
 "use client";
 import {
+  AmountLogo,
   ArmchairIcon,
   BusBackground,
   CarHero,
@@ -82,7 +83,11 @@ const Home = () => {
       backGroundColor: "#F472B6",
     },
   ];
-  const busPoint=["Boarding Point - Laxmipur","Dropping Point - Bogura","Est. Time - 11 Hour"]
+  const busPoint = [
+    "Boarding Point - Laxmipur",
+    "Dropping Point - Bogura",
+    "Est. Time - 11 Hour",
+  ];
   const displayCards = showAll ? bestCardData : bestCardData.slice(0, 2);
   return (
     <section>
@@ -155,15 +160,16 @@ const Home = () => {
       </div>
       {/* Best offers for   */}
       {/* main body */}
-      <div className="border border-Secondary rounded-4xl mt-30 ">
-        <div className="max-w-6xl mx-auto py-30 border">
+      <div className="border-t border-t-Secondary rounded-t-4xl mt-30 ">
+        <div className="max-w-6xl mx-auto pt-30">
           <p className="text-center font-bold text-[40px]">P.H Paribahan</p>
           <p className="text-center text-lg font-Inter text-Primary/60">
             Yes, you can run unit tests and view the results directly within the
             app. The integrated <br /> testing features allow for a streamlined
             .
           </p>
-          <div className="border  flex justify-between items-center py-[47.25px] rounded-2xl">
+          <div className="  flex justify-between items-center py-[47.25px] rounded-2xl">
+            
             <div className=" basis-4xl ">
               <div className="flex justify-between ">
                 <div className="flex items-center gap-58.25">
@@ -171,14 +177,14 @@ const Home = () => {
                     <BusIcon width="68.57" height="48" stroke="#030712" />
                     <div>
                       <p className="font-bold text-[32px]">
-                        Greenline Paribahan
+                        P Paribahan
                       </p>
                       <p className="font-Inter text-Primary/60">
                         Coach-009-WEB ! AC_Business
                       </p>
                     </div>
                   </div>
-                  
+
                   <Button
                     className="flex items-center bg-Secondary/15 rounded-xl py-3.5 px-4.25"
                     icon={<ArmchairIcon />}
@@ -189,25 +195,38 @@ const Home = () => {
               <div className="mt-6 p-8  bg-[#F7F8F8]">
                 <div className="flex justify-between items-center border-b border-dashed pb-6 ">
                   <p className="font-semibold text-lg text-Primary/60">Route</p>
-                  <p className="font-semibold text-lg text-Primary">Dhaka - Sylhet</p>
+                  <p className="font-semibold text-lg text-Primary">
+                    Dhaka - Sylhet
+                  </p>
                 </div>
                 <div className="flex justify-between items-center border-b border-dashed pb-6 mt-6">
-                  <p className="font-semibold text-lg text-Primary/60">Departure Time</p>
+                  <p className="font-semibold text-lg text-Primary/60">
+                    Departure Time
+                  </p>
                   <p className="font-semibold text-lg text-Primary">9:00 PM</p>
                 </div>
                 <div className="mt-6 flex justify-between gap-6 ">
-                  {
-                    busPoint.map((item)=>
-                    <Button title={item} className="px-4.5 py-5 border w-full rounded-xl font-medium font-Inter text-base text-Primary/80" key={item}
-                     />)
-                  }
+                  {busPoint.map((item) => (
+                    <Button
+                      title={item}
+                      className="px-4.5 py-5  w-full rounded-xl font-medium font-Inter bg-Primary/5 text-base text-Primary/80"
+                      key={item}
+                    />
+                  ))}
                 </div>
-                </div>
-            </div>
-            <div className=" flex-1 border-l border-dashed p-5 border-Secondary">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus fugiat quas, qui consectetur eos labore quos deleniti magnam eligendi fuga amet harum modi repudiandae mollitia excepturi! A, tempore incidunt. Dicta.
               </div>
+            </div>
+            <div className=" flex-1 border-l border-dashed p-5 border-Secondary text-center space-y-6">
+              <div className="flex justify-center">
+                <AmountLogo />
+              </div>
+              <p className="font-bold text-4xl text-Primary">550 Taka</p>
+              <p className="font-semibold text-2xl text-Primary/60">Per Seat</p>
+            </div>
           </div>
+        </div>
+        <div className="max-w-6xl mx-auto">
+dd
         </div>
       </div>
       {/* main body */}
