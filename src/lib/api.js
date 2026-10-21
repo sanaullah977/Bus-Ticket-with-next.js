@@ -1,11 +1,12 @@
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+const RAW_BACKEND_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://bus-ticket-backend-dun.vercel.app";
+const BACKEND_URL = RAW_BACKEND_URL.replace(/\/+$/, "");
 
 /**
  * Universal fetch helper with fallback between relative path and direct backend URL
  */
 async function fetchWithFallback(endpoint, options = {}) {
-  // If in browser, first try relative endpoint (Next.js rewrite proxy), then fallback to direct backend URL
   const urlsToTry =
     typeof window !== "undefined"
       ? [`${endpoint}`, `${BACKEND_URL}${endpoint}`]
@@ -22,7 +23,6 @@ async function fetchWithFallback(endpoint, options = {}) {
     }
   }
 
-  // If both failed
   const isNetworkFailure =
     lastError &&
     (lastError.name === "TypeError" ||
@@ -31,7 +31,7 @@ async function fetchWithFallback(endpoint, options = {}) {
 
   if (isNetworkFailure) {
     throw new Error(
-      "Backend server is offline. Please start the backend with: npm run dev:backend"
+      `Backend server is offline or unreachable at ${BACKEND_URL}.`
     );
   }
 

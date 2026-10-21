@@ -24,12 +24,62 @@ import {
   createBookingApi,
 } from "@/lib/api";
 
+const defaultCoupons = [
+  {
+    percentageOff: 15,
+    date: "January 2024",
+    couponCode: "NEW15",
+    backGroundColor: "#FFBF0F",
+  },
+  {
+    percentageOff: 20,
+    date: "January 2024",
+    couponCode: "Couple 20",
+    backGroundColor: "#F6949F",
+  },
+  {
+    percentageOff: 10,
+    date: "February 2024",
+    couponCode: "SAVE10",
+    backGroundColor: "#4ADE80",
+  },
+  {
+    percentageOff: 25,
+    date: "March 2024",
+    couponCode: "SUPER25",
+    backGroundColor: "#60A5FA",
+  },
+  {
+    percentageOff: 30,
+    date: "April 2024",
+    couponCode: "MEGA30",
+    backGroundColor: "#A78BFA",
+  },
+  {
+    percentageOff: 50,
+    date: "May 2024",
+    couponCode: "HALF50",
+    backGroundColor: "#FB923C",
+  },
+  {
+    percentageOff: 5,
+    date: "June 2024",
+    couponCode: "WELCOME5",
+    backGroundColor: "#38BDF8",
+  },
+  {
+    percentageOff: 40,
+    date: "July 2024",
+    couponCode: "PROMO40",
+    backGroundColor: "#F472B6",
+  },
+];
+
 const Home = () => {
   const [showAll, setShowAll] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
-  const [bestCardData, setBestCardData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [bestCardData, setBestCardData] = useState(defaultCoupons);
 
   const [seatPrice, setSeatPrice] = useState(550);
   const [busDetails, setBusDetails] = useState({
@@ -100,10 +150,6 @@ const Home = () => {
         }
       } catch (err) {
         console.warn("Could not load MongoDB data:", err);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
       }
     }
 
@@ -315,24 +361,17 @@ const Home = () => {
           Best offers for you
         </p>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-            <div className="h-44 w-full animate-pulse rounded-3xl bg-gray-200" />
-            <div className="h-44 w-full animate-pulse rounded-3xl bg-gray-200" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-            {displayCards.map((item, index) => (
-              <BestCardComponents
-                key={item.couponCode || index}
-                percentageOff={item.percentageOff}
-                date={item.date}
-                couponCode={item.couponCode}
-                backGroundColor={item.backGroundColor}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+          {displayCards.map((item, index) => (
+            <BestCardComponents
+              key={item.couponCode || index}
+              percentageOff={item.percentageOff}
+              date={item.date}
+              couponCode={item.couponCode}
+              backGroundColor={item.backGroundColor}
+            />
+          ))}
+        </div>
 
         {bestCardData.length > 2 && (
           <div className="mt-8 flex justify-center sm:mt-12">

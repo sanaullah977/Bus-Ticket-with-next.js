@@ -1,7 +1,7 @@
 const BestCard = ({
   fill = "#FFBF0F",
   LineStroke = "white",
-  width = "573",
+  width = "100%",
 }) => {
   return (
     <svg
@@ -10,6 +10,7 @@ const BestCard = ({
       viewBox="0 0 573 220"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="w-full h-auto block"
     >
       <rect width="573" height="220" rx="24" fill={fill} />
       <path
