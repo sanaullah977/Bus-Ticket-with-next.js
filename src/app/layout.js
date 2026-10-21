@@ -19,10 +19,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${raleway.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-raleway">
-        <Navbar  />
-        {children}
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
-        <Footer/>
     </html>
   );
 }

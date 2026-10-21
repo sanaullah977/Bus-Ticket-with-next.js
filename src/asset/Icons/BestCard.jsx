@@ -7,7 +7,7 @@ const BestCard = ({
     <svg
       width={width}
       height="220"
-      viewBox="0 0  220"
+      viewBox="0 0 573 220"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -26,8 +26,8 @@ const BestCard = ({
         x2="343"
         y2="188"
         stroke={LineStroke}
-        stroke-width="2"
-        stroke-dasharray="5 5"
+        strokeWidth="2"
+        strokeDasharray="5 5"
       />
     </svg>
   );
