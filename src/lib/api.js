@@ -14,9 +14,14 @@ async function fetchWithFallback(endpoint, options = {}) {
 
   let lastError = null;
 
-  for (const url of urlsToTry) {
+  for (let i = 0; i < urlsToTry.length; i++) {
+    const url = urlsToTry[i];
     try {
       const res = await fetch(url, options);
+      // If the first URL failed with 404 or a 5xx gateway error, try the fallback URL
+      if (!res.ok && (res.status === 404 || res.status >= 500) && i < urlsToTry.length - 1) {
+        continue;
+      }
       return res;
     } catch (err) {
       lastError = err;
@@ -124,4 +129,19 @@ export async function createBookingApi(bookingData) {
     throw new Error(data.message || "Failed to complete booking");
   }
   return data;
+}
+
+/**
+ * Reset all bookings for resale
+ */
+export async function resetBookingsApi() {
+  try {
+    const res = await fetchWithFallback("/api/bookings/reset", {
+      method: "POST",
+    });
+    return await res.json();
+  } catch (err) {
+    console.warn("Reset bookings error:", err.message);
+    return null;
+  }
 }

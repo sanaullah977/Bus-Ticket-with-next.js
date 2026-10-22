@@ -22,6 +22,7 @@ import {
   getCoupons,
   applyCouponApi,
   createBookingApi,
+  resetBookingsApi,
 } from "@/lib/api";
 
 const defaultCoupons = [
@@ -140,8 +141,10 @@ const Home = () => {
             ],
           });
           if (busRes.bus.seatPrice) setSeatPrice(busRes.bus.seatPrice);
-          if (busRes.bus.bookedSeats) setBookedSeats(busRes.bus.bookedSeats);
-        } else if (booked && booked.length > 0) {
+          if (Array.isArray(busRes.bus.bookedSeats)) {
+            setBookedSeats(busRes.bus.bookedSeats);
+          }
+        } else if (Array.isArray(booked)) {
           setBookedSeats(booked);
         }
 
@@ -197,6 +200,28 @@ const Home = () => {
   const totalPrice = selectedSeats.length * seatPrice;
   const discountAmount = couponInfo ? couponInfo.discountAmount : 0;
   const grandTotal = Math.max(0, totalPrice - discountAmount);
+
+  const totalBusSeats = 40;
+  const isAllSeatsBooked = bookedSeats.length >= totalBusSeats;
+
+  const handleResetSeats = async () => {
+    if (!isAllSeatsBooked) return;
+    try {
+      await resetBookingsApi();
+      const busData = await getBusInfo();
+      if (busData && busData.bus) {
+        setBookedSeats(busData.bus.bookedSeats || []);
+      } else {
+        setBookedSeats([]);
+      }
+    } catch (err) {
+      console.warn("Could not reset on server:", err);
+      setBookedSeats([]);
+    }
+    setSelectedSeats([]);
+    setCouponInfo(null);
+    setFormError("");
+  };
 
   const toggleSeat = (seat) => {
     if (bookedSeats.includes(seat)) return;
@@ -498,11 +523,35 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Driver */}
-            <div className="mt-6 flex justify-end">
-              <div className="flex w-14 justify-center rounded-xl bg-Primary/10 px-3 py-3 sm:w-20 sm:py-4">
+            {/* Driver / Reseat Button */}
+            <div className="mt-6 flex flex-col items-end gap-1">
+              <button
+                type="button"
+                onClick={handleResetSeats}
+                disabled={!isAllSeatsBooked}
+                title={
+                  isAllSeatsBooked
+                    ? "All seats booked! Click to reseat all seats for resale"
+                    : "Reseat disabled: seats are still available"
+                }
+                className={`flex items-center justify-center gap-2 rounded-xl transition-all ${
+                  isAllSeatsBooked
+                    ? "cursor-pointer bg-Secondary text-white px-4 py-3 sm:py-4 shadow-lg ring-2 ring-Secondary/40 animate-pulse"
+                    : "cursor-not-allowed bg-Primary/10 text-Primary/30 opacity-60 w-14 sm:w-20 px-3 py-3 sm:py-4"
+                }`}
+              >
                 <SteeringWheel />
-              </div>
+                {isAllSeatsBooked && (
+                  <span className="text-xs sm:text-sm font-bold whitespace-nowrap">
+                    Reseat
+                  </span>
+                )}
+              </button>
+              {isAllSeatsBooked && (
+                <span className="text-[11px] font-semibold text-Secondary">
+                  All seats sold! Click to resale
+                </span>
+              )}
             </div>
 
             {/* Bus Seat Grid */}
